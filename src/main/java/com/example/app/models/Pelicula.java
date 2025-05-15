@@ -1,5 +1,8 @@
 package com.example.app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.NotFound;
@@ -26,22 +29,25 @@ public class Pelicula {
 
     @ManyToOne
     @JoinColumn(name = "principal_genero_id")
+    @JsonIgnore
     private Genero principalGenero;
 
     @ManyToMany
     @JoinTable(name = "Genero_secundario",
                joinColumns = @JoinColumn(name = "pelicula_id"),
      inverseJoinColumns = @JoinColumn(name = "secundario_genero_id"))
+
     private List<Genero> generos = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "Actor_pelicula",
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "pelicula_actor",
             joinColumns = @JoinColumn(name = "pelicula_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id"))
+
     private List<Actor> actors = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "directores")
+    @JoinColumn(name = "director_id")
     private Director director;
 
     @OneToMany(mappedBy = "pelicula",cascade = CascadeType.ALL,orphanRemoval = true)

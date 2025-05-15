@@ -1,5 +1,6 @@
 package com.example.app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -20,6 +21,7 @@ public class Resena {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pelicula_id")
+    @JsonIgnore
     private Pelicula pelicula;
 
     public Long getId() {

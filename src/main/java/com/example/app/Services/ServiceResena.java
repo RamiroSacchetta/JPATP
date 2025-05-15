@@ -17,6 +17,7 @@ public class ServiceResena {
     private RepositoryResena repo;
     @Autowired
     private RepositoryPelicula repositoryPelicula;
+
     public Optional<Resena> agregarResena(Long pelicula_id,Resena resena){
 
         Optional<Pelicula> pelicula = repositoryPelicula.findById(pelicula_id);
